@@ -17,23 +17,12 @@ const Room = () => {
   //   console.log("rooms", rooms);
   // };
 
-  const getRooms = async (roomType, checkInDate, checkOutDate) => {
-    console.log(
-      "types",
-      typeof roomType,
-      typeof checkInDate,
-      typeof checkOutDate
-    );
+  const getRooms = async (roomType, date) => {
+    console.log("types", typeof roomType);
     try {
-      const formattedInDate = checkInDate
-        ? checkInDate.toISOString().slice(0, 10)
-        : "";
-      const formattedOutDate = checkOutDate
-        ? checkOutDate.toISOString().slice(0, 10)
-        : "";
-
+      const formattedOutDate = date ? date.toISOString().slice(0, 10) : "";
       const response = await fetch(
-        `https://localhost:7101/api/Rooms?roomType=${roomType}&checkInDate=${formattedInDate}&checkOutDate=${formattedOutDate}`
+        `https://localhost:7101/api/Rooms?roomType=${roomType}&date=${formattedOutDate}`
       );
 
       if (!response.ok) {
@@ -53,12 +42,6 @@ const Room = () => {
     <main>
       <input
         type="date"
-        placeholder="enter checkin date"
-        value={inDate}
-        onChange={(e) => setInDate(e.target.value)}
-      />
-      <input
-        type="date"
         placeholder="enter checkout date"
         value={outDate}
         onChange={(e) => setOutDate(e.target.value)}
@@ -73,9 +56,7 @@ const Room = () => {
         <option value="1">Double</option>
         <option value="2">Suit</option>
       </select>
-      <button
-        onClick={() => getRooms(type, new Date(inDate), new Date(outDate))}
-      >
+      <button onClick={() => getRooms(type, new Date(outDate))}>
         Get Rooms
       </button>
     </main>
