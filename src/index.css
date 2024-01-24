@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-title {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.main-welcome-text {
+  font-size: 14px;
+  margin: 0;
+  color: #7f8c8d;
+}
+.main-input-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.main-input-container input {
+  width: 300px;
+  padding: 7px;
+  outline: none;
+}
+
+.main-input-container select {
+  width: 319px;
+  padding: 7px;
+  outline: none;
+}
+
+.main-input-container button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  background-color: #2ecc71;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.main-rooms-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.roomitem {
+  width: 400px;
+  position: relative;
+  transition: all 0.3s ease-in;
+}
+.roomitem-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 300px;
+  background-color: black;
+  opacity: 0.7;
+  display: none;
+}
+
+.roomitem:hover .roomitem-overlay {
+  display: block;
+}
+
+.roomitem-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.roomitem-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.roomitem-info-price {
+  font-size: 18px;
+  color: #2ecc71;
+}
+
+.roomitem-info-type {
+  font-size: 14px;
+  font-weight: lighter;
+  text-transform: lowercase;
+  color: #7f8c8d;
+}
+
+.roomitem-button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  background-color: #2ecc71;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.rooms-error {
+  color: red;
+}

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import RoomItem from "../Components/RoomItem";
+// import single from "../assets/single.jpg";
 
 const Room = () => {
   const [inDate, setInDate] = useState("");
@@ -39,26 +41,41 @@ const Room = () => {
   };
 
   return (
-    <main>
-      <input
-        type="date"
-        placeholder="enter checkout date"
-        value={outDate}
-        onChange={(e) => setOutDate(e.target.value)}
-      />
-      <select
-        name=""
-        id=""
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-      >
-        <option value="0">Single</option>
-        <option value="1">Double</option>
-        <option value="2">Suit</option>
-      </select>
-      <button onClick={() => getRooms(type, new Date(outDate))}>
-        Get Rooms
-      </button>
+    <main className="main">
+      <h1 className="main-title">Hotel Reservation System</h1>
+      <p className="main-welcome-text">Find your perfect room!</p>
+      <div className="main-input-container">
+        <input
+          type="date"
+          placeholder="enter checkout date"
+          value={outDate}
+          onChange={(e) => setOutDate(e.target.value)}
+        />
+        <select
+          name=""
+          id=""
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        >
+          <option value="0">Single</option>
+          <option value="1">Double</option>
+          <option value="2">Suite</option>
+        </select>
+        <button onClick={() => getRooms(type, new Date(outDate))}>
+          Get Rooms
+        </button>
+      </div>
+      <div className="main-rooms-container">
+        {rooms.length === 0 ? (
+          <p className="rooms-error">
+            Sorry,There are no rooms available at the moment!
+          </p>
+        ) : (
+          rooms.map((room) => {
+            return <RoomItem room={room} key={room.id} />;
+          })
+        )}
+      </div>
     </main>
   );
 };
