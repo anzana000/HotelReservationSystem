@@ -6,26 +6,40 @@ import suite from "../assets/suite.jpg";
 
 const RoomItem = ({ room }) => {
   //book room
-  const bookRoom = async (roomId, userId, checkInDate, checkOutDate) => {
+  const bookRoom = async (roomId, userId, checkInDate, days) => {
     console.log("book room clicked");
 
     try {
       console.log(typeof roomId, typeof userId);
 
       const formattedInDate = checkInDate?.toISOString().slice(0, 10);
-      const formattedOutDate = checkOutDate?.toISOString().slice(0, 10);
 
       const data = {
         roomId: roomId,
         userId: userId,
         checkInDate: formattedInDate,
-        checkOutDate: formattedOutDate,
+        days: days,
       };
 
-      const response = await axios.post(
-        `https://localhost:7101/api/Rooms/book`,
-        data
-      );
+      // const response = await axios.post(
+      //   `https://localhost:7101/api/Rooms/book`,
+      //   data
+      // );
+
+      const response = fetch(`https://localhost:7101/api/Rooms/book`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success!", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
 
       console.log("book response", response.data);
     } catch (error) {
@@ -81,12 +95,7 @@ const RoomItem = ({ room }) => {
       <button
         className="roomitem-button"
         onClick={() => {
-          bookRoom(
-            room.id,
-            room.userId,
-            new Date(room.checkInDate),
-            new Date(room.checkOutDate)
-          );
+          bookRoom(room.id, room.userId, new Date(room.checkInDate), 2);
         }}
       >
         Book now
