@@ -6,8 +6,9 @@ import suite from "../assets/suite.jpg";
 
 const RoomItem = ({ room }) => {
   //book room
-  const bookRoom = (roomId, userId, checkInDate, checkOutDate) => {
+  const bookRoom = async (roomId, userId, checkInDate, checkOutDate) => {
     console.log("book room clicked");
+
     try {
       console.log(typeof roomId, typeof userId);
 
@@ -21,7 +22,7 @@ const RoomItem = ({ room }) => {
         checkOutDate: formattedOutDate,
       };
 
-      const response = axios.post(
+      const response = await axios.post(
         `https://localhost:7101/api/Rooms/book`,
         data
       );
