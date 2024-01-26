@@ -1,26 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import RoomItem from "../Components/RoomItem";
-// import single from "../assets/single.jpg";
+import single from "../assets/single.jpg";
+import double from "../assets/double.jpg";
+import suite from "../assets/suite.jpg";
 
 const Room = () => {
-  const [inDate, setInDate] = useState("");
   const [outDate, setOutDate] = useState("");
-  const [type, setType] = useState(0);
-  const [rooms, setRooms] = useState([]); // State to hold fetched rooms
-  const [error, setError] = useState(null); // State to hold potential errors
+  const [type, setType] = useState();
+  const [rooms, setRooms] = useState([]);
+  const [invoice, setInvoice] = useState({});
+  const [showInvoice, setShowInvoice] = useState(false);
+  const [error, setError] = useState();
 
-  // const getRooms = (indate, outdate, rtype) => {
-  //   console.log(typeof indate, typeof outdate, type);
-  //   const rooms = fetch(
-  //     `https://localhost:7101/api/Rooms?roomType=${rtype}&checkInDate=${indate}&checkOutDate=${outdate}`
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => data);
-  //   console.log("rooms", rooms);
-  // };
-
+  //get available rooms
   const getRooms = async (roomType, date) => {
     console.log("types", typeof roomType);
+
     try {
       const formattedOutDate = date ? date.toISOString().slice(0, 10) : "";
       const response = await fetch(
@@ -36,6 +31,22 @@ const Room = () => {
       console.log("rooms", rooms);
     } catch (error) {
       setError(error);
+      console.log("error", error);
+    }
+  };
+
+  //get user details(invoice)
+  const getInvoice = async (roomId) => {
+    setShowInvoice(true);
+    try {
+      const response = await fetch(
+        `https://localhost:7101/api/Rooms/${roomId}/invoice`
+      );
+
+      const data = await response.json();
+      console.log("invoice response", data);
+      setInvoice(data);
+    } catch (error) {
       console.log("error", error);
     }
   };
@@ -64,6 +75,45 @@ const Room = () => {
         <button onClick={() => getRooms(type, new Date(outDate))}>
           Get Rooms
         </button>
+        <button onClick={() => getInvoice(1)} id="invoice-btn">
+          Get Invoice
+        </button>
+        <div
+          className="main-invoice-container"
+          style={{ display: showInvoice ? "flex" : "none" }}
+        >
+          <div className="user-details">
+            <h1>{invoice.customerName}</h1>
+            <p>Number of Rooms booked: {invoice.totalRooms}</p>
+            <p>Gross Amount: {invoice.grossAmount}</p>
+            <p>Discount: {invoice.discount}</p>
+            <p>Net Amount: {invoice.netAmount}</p>
+          </div>
+          <div className="user-rooms">
+            {invoice.bookingDetails?.map((detail) => {
+              return (
+                <div key={detail.id}>
+                  <img
+                    width={300}
+                    height={300}
+                    src={
+                      detail.roomType === 0
+                        ? single
+                        : detail.roomType === 1
+                        ? double
+                        : suite
+                    }
+                  />
+
+                  <h3>Nrs.{detail.price}</h3>
+                </div>
+              );
+            })}
+          </div>
+          <button onClick={() => setShowInvoice(false)} className="close-btn">
+            Close
+          </button>
+        </div>
       </div>
       <div className="main-rooms-container">
         {rooms.length === 0 ? (
@@ -72,7 +122,7 @@ const Room = () => {
           </p>
         ) : (
           rooms.map((room) => {
-            return <RoomItem room={room} key={room.id} />;
+            return <RoomItem room={room} key={room.id} checkInDate={outDate} />;
           })
         )}
       </div>

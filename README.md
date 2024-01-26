@@ -1,8 +1,33 @@
-# React + Vite
+# Hotel Reservation System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple system made with ReactJs and Dotnet core 6 to reserve rooms in a hotel and view booking details.This project contains the frontend part that uses web api made from dotnet core 6 to obtain the desired data and functionality.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Client:** ReactJs
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone git@github.com:anzana000/HotelReservationSystem.git
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```

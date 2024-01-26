@@ -105,6 +105,11 @@ body {
   color: #7f8c8d;
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .roomitem-button {
   outline: none;
   border: none;
@@ -118,4 +123,55 @@ body {
 
 .rooms-error {
   color: red;
+}
+
+#invoice-btn {
+  background-color: transparent;
+  border: 1px solid #34495e;
+  color: #34495e;
+}
+
+.main-invoice-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #34495e;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  z-index: 2;
+  overflow-y: scroll;
+  padding-left: 4rem;
+  padding-bottom: 1rem;
+}
+
+.main-invoice-container h1,
+.main-input-container p:not(:last-child) {
+  text-transform: capitalize;
+  border-bottom: 1px solid #bdc3c7;
+  width: 400px;
+  padding-bottom: 5px;
+}
+
+.user-rooms {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.user-rooms img {
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 500px) {
+  img {
+    width: 100%;
+  }
 }

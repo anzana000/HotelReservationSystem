@@ -1,38 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import single from "../assets/single.jpg";
 import double from "../assets/double.jpg";
 import suite from "../assets/suite.jpg";
 
-const RoomItem = ({ room }) => {
+const RoomItem = ({ room, checkInDate }) => {
+  const [show, setShow] = useState(false);
+
   //book room
   const bookRoom = async (roomId, userId, checkInDate, days) => {
     console.log("book room clicked");
 
     try {
       console.log(typeof roomId, typeof userId);
-
-      const formattedInDate = checkInDate?.toISOString().slice(0, 10);
-
       const data = {
         roomId: roomId,
         userId: userId,
-        checkInDate: formattedInDate,
+        checkInDate: checkInDate,
         days: days,
       };
 
-      // const response = await axios.post(
-      //   `https://localhost:7101/api/Rooms/book`,
-      //   data
-      // );
+      // const jsonParam = JSON.stringify(data);
 
-      const response = fetch(`https://localhost:7101/api/Rooms/book`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
+      // const response = fetch(`https://localhost:7101/api/Rooms/book`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: jsonParam,
+      // })
+      const response = await axios
+        .post(`https://localhost:7101/api/Rooms/book`, data, {
+          headers: { "Content-Type": "application/json" },
+        })
         .then((response) => response.json())
         .then((data) => {
           console.log("Success!", data);
@@ -45,25 +45,7 @@ const RoomItem = ({ room }) => {
     } catch (error) {
       console.error("error", error);
     }
-  };
-
-  //get invoice
-  const getInvoice = async (roomId) => {
-    try {
-      const response = await fetch(
-        `https://localhost:7101/api/Rooms/${roomId}/invoice`
-      );
-
-      // if (!response.ok) {
-      //   throw new Error(`API request failed with status ${response.status}`);
-      // }
-
-      const data = await response.json();
-
-      console.log("invoice response", data);
-    } catch (error) {
-      console.log("error", error);
-    }
+    setShow(true);
   };
 
   return (
@@ -92,15 +74,20 @@ const RoomItem = ({ room }) => {
             : "Suite"}
         </h2>
       </div>
+
       <button
         className="roomitem-button"
         onClick={() => {
-          bookRoom(room.id, room.userId, new Date(room.checkInDate), 2);
+          bookRoom(
+            room.id,
+            1,
+            checkInDate,
+            parseInt(prompt("enter number of days"))
+          );
         }}
       >
         Book now
       </button>
-      {/* <button onClick={() => getInvoice(6)}>Get details</button> */}
     </div>
   );
 };
